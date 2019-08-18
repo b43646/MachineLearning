@@ -140,9 +140,30 @@ def classify(inputTree, featLabels, testvec):
     return classLabel
 
 
+def storeTree(inputTree, filename):
+    import pickle
+    fw = open(filename, 'wb')
+    pickle.dump(inputTree, fw)
+    fw.close()
+
+
+def grabTree(filename):
+    import pickle
+    fr = open(filename, 'rb')
+    return pickle.load(fr)
+
+
 if __name__ == "__main__":
+    '''
+    使用决策树预测隐形眼镜类型
+    1. 收集数据: 提供的文本文件
+    2. 准备数据: 解析tab键分割的数据行
+    3. 分析数据: 快速检查数据，确保正确地解析数据内容
+    4. 训练算法: 使用createTree()函数
+    5. 测试算法: 编写测试函数验证决策树可以正确分类给定的数据实例
+    6. 使用算法: 存储树的数据结构，以便下次使用时无需重新构造树
+    '''
     fr = open('lenses.txt')
     lenses = [inst.strip().split('\t') for inst in fr.readlines()]
     lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
-    # print(lenses)
     print(createTree(lenses, lensesLabels))
